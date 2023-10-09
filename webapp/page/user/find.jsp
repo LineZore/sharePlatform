@@ -8,7 +8,7 @@
 <title>找回密码</title>
 </head>
 <body>
-	<form action="<%=path%>/findPassword" method="post">
+	<form action="<%=path%>/user/find" method="post">
 		用户名:<input type="text" name="userName">
 		邮箱:<input type="text" name="userEmail">
 		<input type="submit" value="找回密码">

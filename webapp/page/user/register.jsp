@@ -8,7 +8,7 @@
 <title>注册</title>
 </head>
 <body>
-	<form action="<%=path%>/register">
+	<form action="<%=path%>/user/register">
 		用户名:<input type="text" name="userName">
 		密码:<input type="password" name="userPassword">
 		邮箱:<input type="text" name="userEmail">

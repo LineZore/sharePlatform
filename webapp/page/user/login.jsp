@@ -8,7 +8,7 @@
 <title>登录</title>
 </head>
 <body>
-	<form action="<%=path%>/login " method="post">
+	<form action="<%=path%>/user/login " method="post">
 		用户名:<input type="text" name="userName">
 		密码:<input type="password" name="userPassword">
 		<input type="submit" value="登录">

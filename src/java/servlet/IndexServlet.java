@@ -20,7 +20,7 @@ public class IndexServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getRequestDispatcher("page/user/login.jsp").forward(req, resp);
+		req.getRequestDispatcher("/page/user/login.jsp").forward(req, resp);
 	}
 	
 }

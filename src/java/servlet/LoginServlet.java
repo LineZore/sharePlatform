@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import service.userService;
 import service.impl.userServiceImpl;
 
-@WebServlet("/login")
+@WebServlet("/user/login")
 public class LoginServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
@@ -28,9 +28,9 @@ public class LoginServlet extends HttpServlet{
 		userService us=new userServiceImpl();
 		if(us.login(userName, userPassword)) {
 			req.getSession().setAttribute("userName", userName);
-			req.getRequestDispatcher("page/user/loginSuccess.jsp").forward(req, resp);
+			req.getRequestDispatcher("/page/user/loginSuccess.jsp").forward(req, resp);
 		}else {
-			req.getRequestDispatcher("page/user/loginFail.jsp").forward(req, resp);
+			req.getRequestDispatcher("/page/user/loginFail.jsp").forward(req, resp);
 		}
 	}
 }

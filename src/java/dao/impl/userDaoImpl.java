@@ -46,9 +46,9 @@ public class userDaoImpl extends BaseDao implements userDao{
 	public boolean delete(String userName) {
 		String sql="delete from user where userName=?";
 		int result=this.modifyData(sql, new Object [] {userName});
-		if(result==1)
-			return true;
-		else return false;
+		if(result==0)
+			return false;
+		else return true;
 	}
 
 	@Override

@@ -9,10 +9,10 @@
 </head>
 
 <body>
-	<form action="<%=path%>/modify" method="post">
-		用户名:<input type="text" name="userName">
-		密码:<input type="text" name="userPassword">
-		邮箱:<input type="text" name="userEmail">
+	<form action="<%=path%>/user/modify" method="post">
+		用户名:<input type="text" name="modifyName">
+		密码:<input type="text" name="modifyPassword">
+		邮箱:<input type="text" name="modifyEmail">
 		<input type="submit" value="更改">
 	</form>
 </body>

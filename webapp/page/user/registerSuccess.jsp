@@ -9,7 +9,7 @@
 <body>
 	注册成功
 	<form>
-		<input type="button" onclick="window.location.href='./page/user/login.jsp';" value="登录">
+		<input type="button" onclick="window.location.href='/sharePlatform/page/user/login.jsp';" value="登录">
 	</form>
 </body>
 </html>

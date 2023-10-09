@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import service.userService;
 import service.impl.userServiceImpl;
 
-@WebServlet("/findPassword")
+@WebServlet("/user/find")
 public class FindServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
@@ -29,10 +29,10 @@ public class FindServlet extends HttpServlet{
 		String userPassword=us.find(userName, userEmail);
 		if(userPassword==null)
 		{
-			req.getRequestDispatcher("page/user/find.jsp").forward(req, resp);
+			req.getRequestDispatcher("/page/user/find.jsp").forward(req, resp);
 		}else {
 			req.setAttribute("userPassword", userPassword);
-			req.getRequestDispatcher("page/user/findResult.jsp").forward(req, resp);
+			req.getRequestDispatcher("/page/user/findResult.jsp").forward(req, resp);
 		}
 	}
 }
