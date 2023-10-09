@@ -5,8 +5,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>注销</title>
 </head>
+
 <body>
 	<form action="<%=path%>/modify" method="post">
 		用户名:<input type="text" name="userName">
