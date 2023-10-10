@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.Random;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,11 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import service.userService;
-import service.impl.userServiceImpl;
-
-@WebServlet("/user/checkEmail")
-public class UserCheckByEmailServlet extends HttpServlet{
+import util.EmailUtil;
+@WebServlet("/user/send")
+public class UserSendEmailServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 
@@ -24,22 +23,14 @@ public class UserCheckByEmailServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String userEmail=req.getParameter("userEmail");
-		userService us=new userServiceImpl();
-		Object originEmail=req.getSession().getAttribute("userEmail");
-		if(originEmail==null) {
-			if(us.checkByEmail(userEmail)==0) {
-				resp.getWriter().print(true);
-			}else {
-				resp.getWriter().print(false);
-			}
-		}else {
-			if((us.checkByEmail(userEmail)==0)||userEmail.equals(originEmail.toString())) {
-				resp.getWriter().print(true);
-			}else {
-				resp.getWriter().print(false);
-			}
-		}
-		resp.getWriter().flush();
-
+		String context="尊敬的用户您好，您正在注册本平台的账号，注册验证码为：";
+		
+		Random randObj = new Random();
+		String vcode=Integer.toString(100000 + randObj.nextInt(900000));
+		req.getSession().setAttribute("vcode", vcode);
+		EmailUtil eu=new EmailUtil();
+		eu.sendVerificationEmail(userEmail, context+vcode);
+		
+		resp.getWriter().print(true);
 	}
 }

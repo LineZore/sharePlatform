@@ -9,12 +9,15 @@
 </head>
 
 <body>
-	<form action="<%=path%>/user/register">
+	<form action="<%=path%>/user/register" id="form1">
 		用户名:<input type="text" id="userName" name="userName" onblur="checkName()"><span id="signName"></span><br/>
 		密码:<input type="password" id="userPassword" name="userPassword" onblur="checkPassword()" >
 		<span id="signPassword"></span><br/>
 		邮箱:<input type="text" id="userEmail" name="userEmail" onblur="checkEmail()"><span id="signEmail"></span><br/>
-		<input type="submit" value="注册">
+		
+		<input type="button" value="获取验证码" onclick="sendEmail()"><span id="signSend"></span><br/>
+		验证码：<input type="text" id="vcode" name="vcode"><br/>
+		<input type="button" onclick="verificate()" value="注册">
 	</form>
 </body>
 
@@ -96,6 +99,52 @@
 				spanNode.color="red";
 			}
 		}
+	}
+	function sendEmail(){
+		var userEmail=document.getElementById("userEmail").value;
+		var spanNode=document.getElementById("signSend");
+		
+		var xhr=new XMLHttpRequest();
+		var url="/sharePlatform/user/send?userEmail="+userEmail;
+		
+		xhr.open("post",url,true);		//开启请求
+		xhr.send();
+		xhr.onreadystatechange=function(){
+			if(xhr.readyState==4&&xhr.status==200){
+				//readyState 请求状态
+				//status 响应状态
+				var resText=xhr.responseText;
+				if(resText=="true"){
+					spanNode.innerHTML="√";
+					spanNode.color="green";
+				}
+			}
+		}
+	}
+	function verificate(){
+		var vcode=document.getElementById("vcode").value
+		
+		var xhr=new XMLHttpRequest();
+		var url="/sharePlatform/user/verificate?vcode="+vcode;
+		
+		xhr.open("post",url,true);		//开启请求
+		xhr.send();
+		xhr.onreadystatechange=function(){
+			if(xhr.readyState==4&&xhr.status==200){
+				//readyState 请求状态
+				//status 响应状态
+				var resText=xhr.responseText;
+				if(resText=="true"){
+					document.getElementById('form1').submit();
+					
+				}else{
+					alert("验证失败，请重新验证");
+					
+				}
+			}
+		}
+		
+		
 	}
 </script>
 </html>

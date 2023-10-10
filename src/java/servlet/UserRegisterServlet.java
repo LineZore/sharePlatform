@@ -26,11 +26,16 @@ public class UserRegisterServlet extends HttpServlet{
 		String userName=req.getParameter("userName");
 		String userPassword=req.getParameter("userPassword");
 		String userEmail=req.getParameter("userEmail");
-		userService us=new userServiceImpl();
-		if(us.register(userName, userPassword,userEmail)) {
-			req.getRequestDispatcher("/page/user/registerSuccess.jsp").forward(req, resp);
+		if(req.getSession().getAttribute("vcodeFlag").toString().equals("true")) {
+			userService us=new userServiceImpl();
+			if(us.register(userName, userPassword,userEmail)) {
+				req.getRequestDispatcher("/page/user/registerSuccess.jsp").forward(req, resp);
+			}else {
+				req.getRequestDispatcher("/page/user/register.jsp").forward(req, resp);
+			}
 		}else {
 			req.getRequestDispatcher("/page/user/register.jsp").forward(req, resp);
 		}
+		
 	}
 }
