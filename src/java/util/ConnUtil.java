@@ -10,7 +10,7 @@ public class ConnUtil {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/platform?useUnicode=true&characterEncoding=utf-8","root","1768");
+			conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/platform?useUnicode=true&characterEncoding=utf-8","root","mysql_sharePlatform");
 
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block

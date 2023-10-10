@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import service.userService;
 import service.impl.userServiceImpl;
 
-@WebServlet("/user/delete")
-public class DeleteServlet extends HttpServlet{
+@WebServlet("/user/modifyBase")
+public class UserModifyBaseServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 
@@ -20,15 +20,21 @@ public class DeleteServlet extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doPost(req, resp);
 	}
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String modifyName=req.getParameter("modifyName");
+		String modifyEmail=req.getParameter("modifyEmail");
 		String userName=req.getSession().getAttribute("userName").toString();
 		userService us=new userServiceImpl();
-		if(us.delete(userName)) {
-			resp.sendRedirect("/sharePlatform/page/user/userIndex.jsp");
+		if(us.modifyBase(userName, modifyName, modifyEmail)) {
+			req.getSession().setAttribute("userName", modifyName);
+			req.getSession().setAttribute("userEmail", modifyEmail);
+			
+			req.getRequestDispatcher("/page/user/loginSuccess.jsp").forward(req, resp);
 		}else {
 			
 		}
+		
 	}
-	
 }

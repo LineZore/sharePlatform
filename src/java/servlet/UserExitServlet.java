@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/user/exit")
-public class ExitServlet extends HttpServlet{
+public class UserExitServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 
@@ -21,6 +21,7 @@ public class ExitServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.getSession().setAttribute("userName", null);
+		req.getSession().setAttribute("userEmail", null);
 		resp.sendRedirect("/sharePlatform/page/user/userIndex.jsp");
 	}
 	

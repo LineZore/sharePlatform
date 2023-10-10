@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import service.userService;
 import service.impl.userServiceImpl;
 
-@WebServlet("/user/find")
-public class FindServlet extends HttpServlet{
+@WebServlet("/user/checkEmail")
+public class UserCheckByEmailServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 
@@ -23,16 +23,23 @@ public class FindServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String userName=req.getParameter("userName");
 		String userEmail=req.getParameter("userEmail");
 		userService us=new userServiceImpl();
-		String userPassword=us.find(userName, userEmail);
-		if(userPassword==null)
-		{
-			req.getRequestDispatcher("/page/user/find.jsp").forward(req, resp);
+		String originEmail=req.getSession().getAttribute("userEmail").toString();
+		if(originEmail==null) {
+			if(us.checkByEmail(userEmail)==0) {
+				resp.getWriter().print(true);
+			}else {
+				resp.getWriter().print(false);
+			}
 		}else {
-			req.setAttribute("userPassword", userPassword);
-			req.getRequestDispatcher("/page/user/findResult.jsp").forward(req, resp);
+			if((us.checkByEmail(userEmail)==0)||userEmail.equals(originEmail)) {
+				resp.getWriter().print(true);
+			}else {
+				resp.getWriter().print(false);
+			}
 		}
+		resp.getWriter().flush();
+
 	}
 }

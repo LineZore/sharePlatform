@@ -2,13 +2,14 @@ package service.impl;
 
 import dao.userDao;
 import dao.impl.userDaoImpl;
+import entity.user;
 import service.userService;
 
 public class userServiceImpl implements userService{
 
 	private userDao ud=new userDaoImpl();
 	@Override
-	public boolean login(String userName, String userPassword) {
+	public user login(String userName, String userPassword) {
 		return ud.login(userName, userPassword);
 	}
 	
@@ -16,10 +17,15 @@ public class userServiceImpl implements userService{
 	public boolean register(String userName, String userPassword, String userEmail) {
 		return ud.register(userName, userPassword, userEmail);
 	}
-
+	
 	@Override
-	public boolean modify(String userName, String modifyName, String modifyPassword, String modiftEmail) {
-		return ud.modify(userName, modifyName, modifyPassword, modiftEmail);
+	public boolean modifyBase(String userName,String modifyName,String modifyEmail) {
+		return ud.modifyBase(userName, modifyName, modifyEmail);
+	}
+	
+	@Override
+	public boolean modifyPassword(String userName,String userPassword,String modifyPassword) {
+		return ud.modifyPassword(userName, userPassword, modifyPassword);
 	}
 
 	@Override
@@ -30,5 +36,15 @@ public class userServiceImpl implements userService{
 	@Override
 	public String find(String userName, String userEmail) {
 		return ud.find(userName, userEmail);
+	}
+
+	@Override
+	public int checkByName(String userName) {
+		return ud.checkByName(userName);
+	}
+
+	@Override
+	public int checkByEmail(String userEmail) {
+		return ud.checkByEmail(userEmail);
 	}
 }
