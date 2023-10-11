@@ -92,9 +92,13 @@
 						while(xhrn.status!=200){}
 						if(xhrn.readyState==4&&xhrn.status==200){
 							var resTextn=xhrn.responseText;
-							if(resTextn=="true")
+							if(resTextn=="true"){
 								alert("已发送至您的邮箱中");
-							else alert("邮箱不匹配或不存在");
+								window.location.href="/sharePlatform/page/user/login.jsp";
+							}
+							else {
+								alert("邮箱不匹配或不存在");
+							}
 						}
 						else{
 							alert("请求出错");

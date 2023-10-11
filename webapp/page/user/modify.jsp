@@ -124,8 +124,27 @@
 	}
 	function submitmb(){
 		var checkNameFlag=document.getElementById("signName").innerHTML;
-		if((checkNameFlag=="√")){
-			document.getElementById('form1').submit();
+		var modifyName=document.getElementById("modifyName").value;
+		if((checkNameFlag=="√"||checkNameFlag=="")){
+			var xhr=new XMLHttpRequest();
+			var url="/sharePlatform/user/modifyBase?modifyName="+modifyName;
+			
+			xhr.open("post",url,false);		//开启请求
+			xhr.send();
+			while(xhr.status!=200){}
+			if(xhr.readyState==4&&xhr.status==200){
+				//readyState 请求状态
+				//status 响应状态
+				var resText=xhr.responseText;
+				if(resText=="true"){
+					alert("修改成功");			
+					window.location.href="/sharePlatform/page/user/modify.jsp";
+				}else{
+					alert("修改失败");
+					
+				}
+			}
+			
 		}
 		else{
 			alert("用户名不可用");
@@ -135,28 +154,45 @@
 		var vcode=document.getElementById("vcode").value;
 		var checkEmailFlag=document.getElementById("signEmail").innerHTML;
 		var vtype="modify";
-			
-		if(checkEmailFlag=="√"){
+		if(checkEmailFlag=="√"||checkEmailFlag==""){
 			
 			var xhr=new XMLHttpRequest();
 			var url="/sharePlatform/user/verificate?vcode="+vcode+"&vtype="+vtype;
 			
-			xhr.open("post",url,true);		//开启请求
+			xhr.open("post",url,false);		//开启请求
 			xhr.send();
-			xhr.onreadystatechange=function(){
-				if(xhr.readyState==4&&xhr.status==200){
-					//readyState 请求状态
-					//status 响应状态
-					var resText=xhr.responseText;
-					if(resText=="true"){
-						document.getElementById('form2').submit();
-						
-					}else{
-						alert("验证失败，请重新验证");
-						
+			while(xhr.status!=200){}
+			if(xhr.readyState==4&&xhr.status==200){
+				//readyState 请求状态
+				//status 响应状态
+				var resText=xhr.responseText;
+				if(resText=="true"){
+					var modifyEmail=document.getElementById("modifyEmail").value;
+					var xhrn=new XMLHttpRequest();
+					var urln="/sharePlatform/user/modifyEmail?modifyEmail="+modifyEmail;
+					
+					xhrn.open("post",urln,false);		//开启请求
+					xhrn.send();
+					while(xhrn.status!=200){}
+					if(xhrn.readyState==4&&xhrn.status==200){
+						//readyState 请求状态
+						//status 响应状态
+						var resTextn=xhrn.responseText;
+						if(resTextn=="true"){
+							alert("修改成功");		
+							window.location.href="/sharePlatform/page/user/modify.jsp";
+						}else{
+							alert("修改失败");
+							
+						}
 					}
+					
+				}else{
+					alert("验证失败，请重新验证");
+					
 				}
 			}
+			
 		}
 		else{
 			alert("邮箱格式错误");

@@ -31,12 +31,12 @@ public class UserModifyEmailServlet extends HttpServlet{
 			if(us.modifyEmail(userName, modifyEmail)) {
 				req.getSession().setAttribute("userEmail", modifyEmail);
 				
-				req.getRequestDispatcher("/page/user/modify.jsp").forward(req, resp);
+				resp.getWriter().print(true);
 			}else {
-				
+				resp.getWriter().print(false);
 			}
 		}else {
-			req.getRequestDispatcher("/page/user/modify.jsp").forward(req, resp);
+			resp.getWriter().print(false);
 		}
 	}
 }

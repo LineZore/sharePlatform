@@ -28,11 +28,11 @@ public class UserModifyBaseServlet extends HttpServlet{
 		userService us=new userServiceImpl();
 		if(us.modifyBase(userName, modifyName)) {
 			req.getSession().setAttribute("userName", modifyName);
-			
-			req.getRequestDispatcher("/page/user/modify.jsp").forward(req, resp);
+			resp.getWriter().print(true);
+
 		}else {
-			req.getRequestDispatcher("/page/user/modify.jsp").forward(req, resp);
-	
+			resp.getWriter().print(false);
+
 		}
 		
 	}
