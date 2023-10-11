@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.Random;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import service.userService;
 import service.impl.userServiceImpl;
+import util.EmailUtil;
 
 @WebServlet("/user/find")
 public class UserFindServlet extends HttpServlet{
@@ -29,10 +31,13 @@ public class UserFindServlet extends HttpServlet{
 		String userPassword=us.find(userName, userEmail);
 		if(userPassword==null)
 		{
-			req.getRequestDispatcher("/page/user/find.jsp").forward(req, resp);
+			resp.getWriter().print(false);
 		}else {
-			req.setAttribute("userPassword", userPassword);
-			req.getRequestDispatcher("/page/user/findResult.jsp").forward(req, resp);
+			String context="尊敬的用户您好，您正在找回本平台账号"+userName+"的密码，您的密码为：";
+			
+			EmailUtil eu=new EmailUtil();
+			eu.sendVerificationEmail(userEmail, context+userPassword);
+			resp.getWriter().print(true);
 		}
 	}
 }

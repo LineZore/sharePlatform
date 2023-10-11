@@ -22,6 +22,9 @@ public class EmailUtil {
         properties.put("mail.smtp.host", "smtp.qq.com");// Ö÷»úÃû
         properties.put("mail.smtp.port", "587");
         properties.put("mail.smtp.auth", "true");
+        
+//        properties.put("mail.smtp.ssl.protocols", "TLSv1.2");
+        
 //        properties.put("mail.smtp.ssl.enable", "true");
 //        properties.put("mail.debug", "true");
         Session session = Session.getInstance(properties);

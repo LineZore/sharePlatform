@@ -24,16 +24,15 @@ public class UserModifyBaseServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String modifyName=req.getParameter("modifyName");
-		String modifyEmail=req.getParameter("modifyEmail");
 		String userName=req.getSession().getAttribute("userName").toString();
 		userService us=new userServiceImpl();
-		if(us.modifyBase(userName, modifyName, modifyEmail)) {
+		if(us.modifyBase(userName, modifyName)) {
 			req.getSession().setAttribute("userName", modifyName);
-			req.getSession().setAttribute("userEmail", modifyEmail);
 			
-			req.getRequestDispatcher("/page/user/loginSuccess.jsp").forward(req, resp);
+			req.getRequestDispatcher("/page/user/modify.jsp").forward(req, resp);
 		}else {
-			
+			req.getRequestDispatcher("/page/user/modify.jsp").forward(req, resp);
+	
 		}
 		
 	}

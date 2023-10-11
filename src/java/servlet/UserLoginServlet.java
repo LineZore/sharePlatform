@@ -32,9 +32,9 @@ public class UserLoginServlet extends HttpServlet{
 			req.getSession().setAttribute("user", u);
 			req.getSession().setAttribute("userName", u.getUserName());
 			req.getSession().setAttribute("userEmail", u.getUserEmail());
-			req.getRequestDispatcher("/page/user/loginSuccess.jsp").forward(req, resp);
+			resp.getWriter().print(true);
 		}else {
-			req.getRequestDispatcher("/page/user/loginFail.jsp").forward(req, resp);
+			resp.getWriter().print(false);
 		}
 	}
 }

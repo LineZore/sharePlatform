@@ -7,7 +7,9 @@ public interface userService {
 	
 	public boolean register(String userName,String userPassword,String userEmail);
 	
-	public boolean modifyBase(String userName,String modifyName,String modifyEmail);
+	public boolean modifyBase(String userName,String modifyName);
+	
+	public boolean modifyEmail(String userName,String modifyEmail);
 	
 	public boolean modifyPassword(String userName,String userPassword,String modifyPassword);
 

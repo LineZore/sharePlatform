@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import service.userService;
 import service.impl.userServiceImpl;
 
-@WebServlet("/user/checkEmail")
-public class UserCheckByEmailServlet extends HttpServlet{
+@WebServlet("/user/modifyEmail")
+public class UserModifyEmailServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 
@@ -23,14 +23,20 @@ public class UserCheckByEmailServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String userEmail=req.getParameter("userEmail");
-		userService us=new userServiceImpl();
-		if(us.checkByEmail(userEmail)==0) {
-			resp.getWriter().print(true);
+		String modifyEmail=req.getParameter("modifyEmail");
+		String userName=req.getSession().getAttribute("userName").toString();
+		
+		if(req.getSession().getAttribute("vmodifyFlag").toString().equals("true")) {
+			userService us=new userServiceImpl();
+			if(us.modifyEmail(userName, modifyEmail)) {
+				req.getSession().setAttribute("userEmail", modifyEmail);
+				
+				req.getRequestDispatcher("/page/user/modify.jsp").forward(req, resp);
+			}else {
+				
+			}
 		}else {
-			resp.getWriter().print(false);
+			req.getRequestDispatcher("/page/user/modify.jsp").forward(req, resp);
 		}
-		resp.getWriter().flush();
-
 	}
 }

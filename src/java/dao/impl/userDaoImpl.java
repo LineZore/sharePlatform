@@ -46,14 +46,30 @@ public class userDaoImpl extends BaseDao implements userDao{
 	}
 
 	@Override
-	public boolean modifyBase(String userName,String modifyName, String modifyEmail) {
+	public boolean modifyBase(String userName,String modifyName) {
 		int userId=this.checkByName(userName);
 		
-		if((this.checkByName(modifyName)==0||this.checkByName(modifyName)==userId)
-			&&(this.checkByEmail(modifyName)==0||this.checkByEmail(modifyName)==userId)) {
+		if((this.checkByName(modifyName)==0||this.checkByName(modifyName)==userId)) {
 			
-			String sql="update user set userName=?,userEmail=? where userName=?";
-			int result=this.modifyData(sql, new Object [] {modifyName,modifyEmail,userName});
+			String sql="update user set userName=? where userName=?";
+			int result=this.modifyData(sql, new Object [] {modifyName,userName});
+			if(result==1)
+				return true;
+			else return false;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean modifyEmail(String userName,String modifyEmail) {
+		int userId=this.checkByName(userName);
+		
+		if((this.checkByEmail(modifyEmail)==0||this.checkByEmail(modifyEmail)==userId)) {
+			
+			String sql="update user set userEmail=? where userName=?";
+			int result=this.modifyData(sql, new Object [] {modifyEmail,userName});
 			if(result==1)
 				return true;
 			else return false;

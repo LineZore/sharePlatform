@@ -19,8 +19,13 @@ public class userServiceImpl implements userService{
 	}
 	
 	@Override
-	public boolean modifyBase(String userName,String modifyName,String modifyEmail) {
-		return ud.modifyBase(userName, modifyName, modifyEmail);
+	public boolean modifyBase(String userName,String modifyName) {
+		return ud.modifyBase(userName, modifyName);
+	}
+	
+	@Override
+	public boolean modifyEmail(String userName, String modifyEmail) {
+		return ud.modifyEmail(userName, modifyEmail);
 	}
 	
 	@Override
@@ -47,4 +52,6 @@ public class userServiceImpl implements userService{
 	public int checkByEmail(String userEmail) {
 		return ud.checkByEmail(userEmail);
 	}
+
+
 }

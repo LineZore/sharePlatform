@@ -25,19 +25,10 @@ public class UserCheckByNameServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String userName=req.getParameter("userName");
 		userService us=new userServiceImpl();
-		Object originName=req.getSession().getAttribute("userName");
-		if(originName==null) {
-			if(us.checkByName(userName)==0) {
-				resp.getWriter().print(true);
-			}else {
-				resp.getWriter().print(false);
-			}
+		if(us.checkByName(userName)==0) {
+			resp.getWriter().print(true);
 		}else {
-			if((us.checkByName(userName)==0)||userName.equals(originName.toString())) {
-				resp.getWriter().print(true);
-			}else {
-				resp.getWriter().print(false);
-			}
+			resp.getWriter().print(false);
 		}
 		
 		resp.getWriter().flush();

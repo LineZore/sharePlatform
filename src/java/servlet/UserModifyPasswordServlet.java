@@ -27,9 +27,9 @@ public class UserModifyPasswordServlet extends HttpServlet{
 		String userName=req.getSession().getAttribute("userName").toString();
 		userService us=new userServiceImpl();
 		if(us.modifyPassword(userName, userPassword, modifyPassword)) {
-			req.getRequestDispatcher("/page/user/loginSuccess.jsp").forward(req, resp);
+			resp.getWriter().print(true);
 		}else {
-			
+			resp.getWriter().print(false);
 		}
 	}
 }

@@ -11,8 +11,11 @@ public interface userDao {
 	public boolean register(String userName,String userPassword,String userEmail);
 	//注册
 	
-	public boolean modifyBase(String userName,String modifyName,String modifyEmail);
+	public boolean modifyBase(String userName,String modifyName);
 	//修改（账号基本信息)
+	
+	public boolean modifyEmail(String userName,String modifyEmail);
+	//修改（邮箱）
 	
 	public boolean modifyPassword(String userName,String userPassword,String modifyPassword);
 	//修改（密码）

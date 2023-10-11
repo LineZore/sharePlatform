@@ -22,6 +22,7 @@
 </body>
 
 <script type="text/javascript">
+
 	function checkName(){
 		var userName=document.getElementById("userName").value;
 		var spanNode=document.getElementById("signName");
@@ -55,8 +56,12 @@
 	function checkEmail(){
 		var userEmail=document.getElementById("userEmail").value;
 		var spanNode=document.getElementById("signEmail");
+		var pPattern = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/;
 		if(userEmail==null||userEmail==""){
 			spanNode.innerHTML="邮箱不能为空";
+			spanNode.color="red";
+		}else if(!pPattern.test(userEmail)){
+			spanNode.innerHTML="邮箱格式错误";
 			spanNode.color="red";
 		}else{
 			//去数据库查询
@@ -81,6 +86,8 @@
 			}
 		}
 	}
+	
+
 	function checkPassword(){
 		var userPassword=document.getElementById("userPassword").value;
 		var spanNode=document.getElementById("signPassword");
@@ -101,47 +108,84 @@
 		}
 	}
 	function sendEmail(){
-		var userEmail=document.getElementById("userEmail").value;
-		var spanNode=document.getElementById("signSend");
-		
-		var xhr=new XMLHttpRequest();
-		var url="/sharePlatform/user/send?userEmail="+userEmail;
-		
-		xhr.open("post",url,true);		//开启请求
-		xhr.send();
-		xhr.onreadystatechange=function(){
-			if(xhr.readyState==4&&xhr.status==200){
-				//readyState 请求状态
-				//status 响应状态
-				var resText=xhr.responseText;
-				if(resText=="true"){
-					spanNode.innerHTML="√";
-					spanNode.color="green";
+		var checkEmailFlag=document.getElementById("signEmail").innerHTML;
+		if(checkEmailFlag=="√"){
+			var userEmail=document.getElementById("userEmail").value;
+			var spanNode=document.getElementById("signSend");
+	
+			var xhr=new XMLHttpRequest();
+			var url="/sharePlatform/user/send?userEmail="+userEmail;
+			
+			xhr.open("post",url,true);		//开启请求
+			xhr.send();
+			xhr.onreadystatechange=function(){
+				if(xhr.readyState==4&&xhr.status==200){
+					//readyState 请求状态
+					//status 响应状态
+					var resText=xhr.responseText;
+					if(resText=="true"){
+						spanNode.innerHTML="√";
+						spanNode.color="green";
+					}
+					else{
+						spanNode.innerHTML="请稍等重试";
+						spanNode.color="green";
+					}
 				}
 			}
 		}
+		else{
+			alert("邮箱出错");
+		}
 	}
 	function verificate(){
-		var vcode=document.getElementById("vcode").value
-		
-		var xhr=new XMLHttpRequest();
-		var url="/sharePlatform/user/verificate?vcode="+vcode;
-		
-		xhr.open("post",url,true);		//开启请求
-		xhr.send();
-		xhr.onreadystatechange=function(){
+		var vcode=document.getElementById("vcode").value;
+		var vtype="register";
+		var checkNameFlag=document.getElementById("signName").innerHTML;
+		var checkEmailFlag=document.getElementById("signEmail").innerHTML;
+		var checkPassword=document.getElementById("signPassword").innerHTML;
+		if((checkNameFlag=="√")&&(checkEmailFlag=="√")&&(checkPassword=="√")){
+			
+			
+			var xhr=new XMLHttpRequest();
+			var url="/sharePlatform/user/verificate?vcode="+vcode+"&vtype="+vtype;
+			
+			xhr.open("post",url,false);		//开启请求
+			xhr.send();
+			while(xhr.status!=200){}
 			if(xhr.readyState==4&&xhr.status==200){
 				//readyState 请求状态
 				//status 响应状态
 				var resText=xhr.responseText;
 				if(resText=="true"){
-					document.getElementById('form1').submit();
+					var userName=document.getElementById("userName").value;
+					var userEmail=document.getElementById("userEmail").value;
+					var userPassword=document.getElementById("userPassword").value;
 					
+					var xhrn=new XMLHttpRequest();
+					var urln="/sharePlatform/user/register?userName="+userName+"&userEmail="+userEmail+"&userPassword="+userPassword;
+					
+					xhrn.open("post",urln,false);		//开启请求
+					xhrn.send();
+					while(xhrn.status!=200){}
+					if(xhrn.readyState==4&&xhrn.status==200){
+						var resTextn=xhr.responseText;
+						if(resTextn=="true"){
+							alert("注册成功");
+							window.location.href="/sharePlatform/page/user/login.jsp";
+						}
+						else{
+							alert("注册失败");
+						}
+					}
 				}else{
 					alert("验证失败，请重新验证");
 					
 				}
 			}
+		}
+		else{
+			alert("格式错误");
 		}
 		
 		

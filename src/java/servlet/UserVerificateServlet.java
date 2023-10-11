@@ -22,8 +22,10 @@ public class UserVerificateServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String vcode=req.getParameter("vcode");
 		String svcode=req.getSession().getAttribute("vcode").toString();
+		String vtype=req.getParameter("vtype");
+		
 		if(vcode.equals(svcode)) {
-			req.getSession().setAttribute("vcodeFlag", "true");
+			req.getSession().setAttribute("v"+vtype+"Flag", "true");
 			resp.getWriter().print(true);
 		}else {
 			resp.getWriter().print(false);
