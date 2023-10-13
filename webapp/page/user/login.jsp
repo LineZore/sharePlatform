@@ -32,7 +32,8 @@
 				if(resText=="false"){
 					alert("登录失败");
 				}else{
-					window.location.href="/sharePlatform/page/user/loginSuccess.jsp";
+					window.location.href="/sharePlatform/article/page";
+					
 				}
 			}
 			
