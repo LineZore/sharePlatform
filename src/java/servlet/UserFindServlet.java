@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import entity.user;
 import service.userService;
 import service.impl.userServiceImpl;
 import util.EmailUtil;
@@ -25,10 +26,12 @@ public class UserFindServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String userName=req.getParameter("userName");
+		
 		String userEmail=req.getParameter("userEmail");
 		userService us=new userServiceImpl();
-		String userPassword=us.find(userName, userEmail);
+		user u=us.find(userEmail);
+		String userName=u.getUserName();
+		String userPassword=u.getUserPassword();
 		if(userPassword==null)
 		{
 			resp.getWriter().print(false);

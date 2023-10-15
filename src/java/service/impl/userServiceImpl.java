@@ -39,8 +39,8 @@ public class userServiceImpl implements userService{
 	}
 
 	@Override
-	public String find(String userName, String userEmail) {
-		return ud.find(userName, userEmail);
+	public user find(String userEmail) {
+		return ud.find(userEmail);
 	}
 
 	@Override
@@ -51,6 +51,16 @@ public class userServiceImpl implements userService{
 	@Override
 	public int checkByEmail(String userEmail) {
 		return ud.checkByEmail(userEmail);
+	}
+
+	@Override
+	public float findIntegral(String userName) {
+		return ud.findIntegral(userName);
+	}
+
+	@Override
+	public boolean modifyIntegral(String userName, float changeIntegral) {
+		return ud.modifyIntegral(userName, changeIntegral);
 	}
 
 

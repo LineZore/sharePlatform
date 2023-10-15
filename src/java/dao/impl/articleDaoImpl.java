@@ -3,6 +3,7 @@ package dao.impl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import dao.articleDao;
@@ -154,6 +155,60 @@ public class articleDaoImpl extends BaseDao implements articleDao{
 		if(result==0)
 			return false;
 		else return true;
+	}
+
+	@Override
+	public float findPrice(int articleID) {
+		String sql="select * from article where articleID=?";
+		ResultSet rs=this.getData(sql, new Object [] {articleID});
+		float result=0;
+		try {
+			while(rs.next()) {
+				result=rs.getFloat(7);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public List<article> getByArray(List<Integer> articleIDList) {
+		Object[] o = new Object[articleIDList.size()];
+		String sql="select * from article where articleID in (";
+		for(int i=0;i<articleIDList.size();i++) {
+			o[i]=Integer.toString(articleIDList.get(i));
+			if(i==0) {
+				sql+="?";
+			}else {
+				sql+=",?";
+			}
+		}
+		sql+=")";
+		
+		
+		ResultSet rs=this.getData(sql, o);
+		List<article> list=new ArrayList<article>();
+		try {
+			while(rs.next()) {
+				article art=new article();
+				art.setArticleID(rs.getInt(1));
+				art.setUserID(rs.getInt(2));
+				art.setArticleTitle(rs.getString(3));
+				//art.setArticleContent(rs.getString(4));
+				art.setPublishTime(rs.getDate(5));
+				art.setCheckStatus(rs.getString(6));
+				art.setArticlePrice(rs.getFloat(7));
+				art.setUserName(rs.getString(8));
+				list.add(art);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 }

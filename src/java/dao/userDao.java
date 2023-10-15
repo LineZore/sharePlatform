@@ -23,7 +23,7 @@ public interface userDao {
 	public boolean delete(String userName);
 	//注销
 	
-	public String find(String userName,String userEmail);
+	public user find(String userEmail);
 	//找回密码（利用用户名和邮箱）
 	
 	public int checkByName(String userName);
@@ -32,4 +32,9 @@ public interface userDao {
 	public int checkByEmail(String userEmail) ;
 	//检查邮箱是否存在,不存在返回0,存在返回userId
 	
+	public float findIntegral(String userName);
+	//查询积分
+	
+	public boolean modifyIntegral(String userName,float changeIntegral);
+	//变动积分
 }

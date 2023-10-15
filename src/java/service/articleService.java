@@ -18,4 +18,6 @@ public interface articleService {
 	public List<article> getByUser(String userName);
 	public boolean modify(int articleID,String articleTitle,String articleContent,float articlePrice);
 	public boolean delete(int articleID);
+	public float findPrice(int articleID);
+	public List<article> getByArray(List<Integer> articleIDList);
 }

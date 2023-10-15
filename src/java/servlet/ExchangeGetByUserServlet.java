@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,8 +14,8 @@ import service.articleService;
 import service.exchangeService;
 import service.impl.articleServiceImpl;
 import service.impl.exchangeServiceImpl;
-@WebServlet("/article/show")
-public class ArticleShowServlet extends HttpServlet{
+@WebServlet("/exchange/getUser")
+public class ExchangeGetByUserServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 
@@ -24,22 +25,13 @@ public class ArticleShowServlet extends HttpServlet{
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String articleIDStr=req.getParameter("articleID");
-		int articleID=Integer.parseInt(articleIDStr);
-		
-		articleService as=new articleServiceImpl();
-		article art= as.findContent(articleID);
-		req.setAttribute("article", art);
-		
 		String userName=req.getSession().getAttribute("userName").toString();
 		exchangeService es=new exchangeServiceImpl();
-		if(es.query(userName, articleID)) {
-			req.setAttribute("buyFlag", "true");
-		}else {
-			req.setAttribute("buyFlag", "false");
-		}
-		
-		req.getRequestDispatcher("/means/get").forward(req, resp);
-		
+		List<Integer> intList= es.find(userName);
+		articleService as=new articleServiceImpl();
+		List<article> list=as.getByArray(intList);
+		req.setAttribute("list", list);
+		req.getRequestDispatcher("/page/exchange/showMine.jsp").forward(req, resp);
+
 	}
 }

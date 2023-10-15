@@ -20,4 +20,8 @@ public interface articleDao {
 	public boolean modify(int articleID,String articleTitle,String articleContent,float articlePrice);
 	//ÐÞ¸ÄÎÄ±¾
 	public boolean delete(int articleID);
+	//É¾³ý
+	public float findPrice(int articleID);
+	
+	public List<article> getByArray(List<Integer> articleIDList);
 }

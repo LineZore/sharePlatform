@@ -98,14 +98,15 @@ public class userDaoImpl extends BaseDao implements userDao{
 	}
 
 	@Override
-	public String find(String userName, String userEmail) {
-		String sql="select * from user where userName=? and userEmail=?";
-		ResultSet rs=this.getData(sql, new Object [] {userName,userEmail});
-		String result=null;
+	public user find(String userEmail) {
+		String sql="select * from user where  userEmail=?";
+		ResultSet rs=this.getData(sql, new Object [] {userEmail});
+		user u=new user();
 		boolean flag=false;
 		try {
 			while(rs.next()) {
-				result=rs.getString(3);
+				u.setUserName(rs.getString(2));
+				u.setUserPassword(rs.getString(3));
 				flag=true;
 			}
 		} catch (SQLException e) {
@@ -113,7 +114,7 @@ public class userDaoImpl extends BaseDao implements userDao{
 			e.printStackTrace();
 		}
 		if(flag)
-			return result;
+			return u;
 		else return null;
 	}
 
@@ -148,6 +149,31 @@ public class userDaoImpl extends BaseDao implements userDao{
 			e.printStackTrace();
 		}
 		return result;
+	}
+
+	@Override
+	public float findIntegral(String userName) {
+		String sql="select * from user where userName=? ";
+		ResultSet rs=this.getData(sql, new Object [] {userName});
+		float result=0;
+		try {
+			while(rs.next()) {
+				result=rs.getFloat(6);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public boolean modifyIntegral(String userName, float changeIntegral) {
+		String sql="update user set userIntegral=? where userName=?";
+		int result=this.modifyData(sql, new Object [] {changeIntegral,userName});
+		if(result==1)
+			return true;
+		else return false;
 	}
 
 }

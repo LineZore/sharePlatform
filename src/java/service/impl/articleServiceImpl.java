@@ -51,6 +51,16 @@ public class articleServiceImpl implements articleService{
 		return ad.delete(articleID);
 	}
 
+	@Override
+	public float findPrice(int articleID) {
+		return ad.findPrice(articleID);
+	}
+
+	@Override
+	public List<article> getByArray(List<Integer> articleIDList) {
+		return ad.getByArray(articleIDList);
+	}
+
 
 	
 }

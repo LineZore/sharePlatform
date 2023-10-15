@@ -15,9 +15,13 @@ public interface userService {
 
 	public boolean delete(String userName);
 	
-	public String find(String userName,String userEmail);
+	public user find(String userEmail);
 	
 	public int checkByName(String userName);
 
 	public int checkByEmail(String userEmail) ;
+	public float findIntegral(String userName);
+	//²éÑ¯»ý·Ö
+	
+	public boolean modifyIntegral(String userName,float changeIntegral);
 }

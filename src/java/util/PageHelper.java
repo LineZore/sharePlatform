@@ -2,10 +2,10 @@ package util;
 
 public class PageHelper {
 
-	private int pageNo;
-	private int pageSize;
-	private int dataCount;
-	private int pageCount;//每一页数量
+	int pageNo;
+	int pageSize;
+	int dataCount;
+	int pageCount;//每一页数量
 	
 	public int getPageNo() {
 		return pageNo;
