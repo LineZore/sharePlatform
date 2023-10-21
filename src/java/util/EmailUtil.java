@@ -13,7 +13,7 @@ import javax.mail.internet.MimeMessage;
 
 
 public class EmailUtil {
-	public void sendVerificationEmail(String userEmail,String context) {
+	public boolean sendVerificationEmail(String userEmail,String context) {
 		String from ="2649883212@qq.com";
 		String token="vmdjfvgdpqgudigi";
 		
@@ -22,7 +22,7 @@ public class EmailUtil {
         properties.put("mail.smtp.host", "smtp.qq.com");// 主机名
         properties.put("mail.smtp.port", "587");
         properties.put("mail.smtp.auth", "true");
-        
+        boolean result=false;
 //        properties.put("mail.smtp.ssl.protocols", "TLSv1.2");
         
 //        properties.put("mail.smtp.ssl.enable", "true");
@@ -36,7 +36,7 @@ public class EmailUtil {
 			message.setRecipients(Message.RecipientType.TO, new InternetAddress[]{new InternetAddress(userEmail)});
 	        message.setSubject("计算机专业资料分享平台:");
 	        message.setText(context);//这是我们的邮件要发送的信息内容
-
+	        
 		} catch (AddressException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -45,7 +45,6 @@ public class EmailUtil {
 			e.printStackTrace();
 		}
         // 设置收件人邮箱地址 
-                // 得到邮差对象
         Transport transport;
 		try {
 			transport = session.getTransport();
@@ -53,6 +52,7 @@ public class EmailUtil {
 	        // 发送邮件
 	        transport.sendMessage(message, message.getAllRecipients());
 	        transport.close();
+	        result=true;
 		} catch (NoSuchProviderException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -60,6 +60,7 @@ public class EmailUtil {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        
+		
+        return result;
 	}
 }

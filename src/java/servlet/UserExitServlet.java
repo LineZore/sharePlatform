@@ -22,6 +22,8 @@ public class UserExitServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.getSession().setAttribute("userName", null);
 		req.getSession().setAttribute("userEmail", null);
+		req.getSession().setAttribute("userIntegral", null);
+		req.getSession().setAttribute("userType", null);
 		resp.sendRedirect("/sharePlatform/page/user/userIndex.jsp");
 	}
 	

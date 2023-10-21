@@ -36,7 +36,7 @@ public class userDaoImpl extends BaseDao implements userDao{
 	@Override
 	public boolean register(String userName, String userPassword, String userEmail) {
 		if(this.checkByName(userName)==0&&this.checkByEmail(userEmail)==0) {
-			String sql="insert into user(userName,userPassword,userEmail) values(?,?,?);";
+			String sql="insert into user(userName,userPassword,userEmail,userType,userIntegral) values(?,?,?,'user','0');";
 			int result=this.modifyData(sql, new Object [] {userName,userPassword,userEmail});
 			if(result==1)
 				return true;

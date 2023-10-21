@@ -16,11 +16,13 @@
 	内容：${article.articleContent}<br/>
 	价格：${article.articlePrice}<br/>
 	
-	<c:if test="${buyFlag eq 'false'}">
-		<button  onclick="buy()" id="buy" >购买</button>
-	</c:if>
-	<c:if test="${buyFlag eq 'true'}">
-		<button  disabled="disabled" id="buy" >已购买</button>
+	<c:if test="${userType eq 'user' }">
+		<c:if test="${buyFlag eq 'false'}">
+			<button  onclick="buy()" id="buy" >购买</button>
+		</c:if>
+		<c:if test="${buyFlag eq 'true'}">
+			<button  disabled="disabled" id="buy" >已购买</button>
+		</c:if>
 	</c:if>
 	
 	<table>
@@ -28,7 +30,15 @@
 		<c:forEach items="${list }" var="m">
 			<tr>
 				<td>${m.meansName}</td>
-				<td><input type=button onclick="window.location.href='/sharePlatform/means/download?meansID=${m.meansID}&meansName=${m.meansName}';" value="下载"></td>
+				<td>
+					<form action="<%=path%>/means/download" method="post">
+						<input type="hidden" name="buyFlag" value="${buyFlag}">
+						<input type="hidden" name="userType" value="${userType}">
+						<input type="hidden" name="meansID" value="${m.meansID}">
+						<input type="hidden" name="meansName" value="${m.meansName}">
+						<input type="submit" value="下载">
+					</form>
+				</td>
 			</tr>
 		</c:forEach>
 		

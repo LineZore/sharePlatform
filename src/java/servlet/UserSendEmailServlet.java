@@ -29,8 +29,11 @@ public class UserSendEmailServlet extends HttpServlet{
 		String vcode=Integer.toString(100000 + randObj.nextInt(900000));
 		req.getSession().setAttribute("vcode", vcode);
 		EmailUtil eu=new EmailUtil();
-		eu.sendVerificationEmail(userEmail, context+vcode);
+		if(eu.sendVerificationEmail(userEmail, context+vcode)) {
+			resp.getWriter().print(true);
+		}else {
+			resp.getWriter().print(false);
+		}
 		
-		resp.getWriter().print(true);
 	}
 }

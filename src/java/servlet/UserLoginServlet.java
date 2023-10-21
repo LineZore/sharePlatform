@@ -33,6 +33,7 @@ public class UserLoginServlet extends HttpServlet{
 			req.getSession().setAttribute("userName", u.getUserName());
 			req.getSession().setAttribute("userEmail", u.getUserEmail());
 			req.getSession().setAttribute("userIntegral", u.getUserIntegral());
+			req.getSession().setAttribute("userType", u.getUserType());
 			resp.getWriter().print(true);
 		}else {
 			resp.getWriter().print(false);

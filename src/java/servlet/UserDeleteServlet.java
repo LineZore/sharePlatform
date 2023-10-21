@@ -27,6 +27,8 @@ public class UserDeleteServlet extends HttpServlet{
 		if(us.delete(userName)) {
 			req.getSession().setAttribute("userName", null);
 			req.getSession().setAttribute("userEmail", null);
+			req.getSession().setAttribute("userIntegral", null);
+			req.getSession().setAttribute("userType", null);
 			resp.sendRedirect("/sharePlatform/page/user/userIndex.jsp");
 		}else {
 			

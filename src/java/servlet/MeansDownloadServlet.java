@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -22,16 +23,22 @@ public class MeansDownloadServlet extends HttpServlet{
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String meansID=req.getParameter("meansID");
-		String meansName=req.getParameter("meansName");
-		String path="D:\\eclipse\\workspace\\sharePlatform\\file\\";
-		File f = new File(path, meansID);
-		if(f.exists()&&f.isFile()) {
-			resp.setHeader("content-disposition", "attachment;filename=" +meansName);
-			ServletOutputStream out = resp.getOutputStream();
-	        // 将文件复制到输出流中，响应给浏览器
-	        Files.copy(Paths.get(f.getAbsolutePath()), out);
+		String buyFlag=req.getParameter("buyFlag");		
+		if(buyFlag.equals("true")) {
+			String meansID=req.getParameter("meansID");
+			String meansName=req.getParameter("meansName");
+			String path="D:\\eclipse\\workspace\\sharePlatform\\file\\";
+			File f = new File(path, meansID);
+			if(f.exists()&&f.isFile()) {
+				resp.setHeader("content-disposition", "attachment;filename=" +URLEncoder.encode(meansName, "UTF-8"));
+				ServletOutputStream out = resp.getOutputStream();
+		        // 将文件复制到输出流中，响应给浏览器
+		        Files.copy(Paths.get(f.getAbsolutePath()), out);
+			}
+		}else {
+			resp.getWriter().print(false);
 		}
+		
         
 	}
 	
