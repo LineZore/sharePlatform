@@ -24,7 +24,10 @@
 			<button  disabled="disabled" id="buy" >已购买</button>
 		</c:if>
 	</c:if>
-	
+	<c:if test="${userType eq 'admin' }">
+		<button  onclick="window.location.href='/sharePlatform/admin/check?articleID=${article.articleID}&flag=1';"  >审核通过</button>
+		<button  onclick="window.location.href='/sharePlatform/admin/check?articleID=${article.articleID}&flag=2';" >审核不通过</button>
+	</c:if>
 	<table>
 		
 		<c:forEach items="${list }" var="m">
@@ -32,7 +35,7 @@
 				<td>${m.meansName}</td>
 				<td>
 					<form action="<%=path%>/means/download" method="post">
-						<input type="hidden" name="buyFlag" value="${buyFlag}">
+						<input type="hidden" name="articleID" value="${article.articleID}">
 						<input type="hidden" name="userType" value="${userType}">
 						<input type="hidden" name="meansID" value="${m.meansID}">
 						<input type="hidden" name="meansName" value="${m.meansName}">

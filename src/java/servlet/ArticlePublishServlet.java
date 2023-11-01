@@ -70,7 +70,7 @@ public class ArticlePublishServlet extends HttpServlet{
 				    		flag=0;
 			        	}
 			        	String fileUpName=fileItem.getName();
-			        	if(fileUpName!=null||fileUpName!="") {
+			        	if(fileUpName!=null&&fileUpName!="") {
 				        	meansService ms=new meansServiceImpl();
 				        	if(ms.addMeans(articleID, fileUpName)) {
 					        	int meansID=ms.findMeans(articleID, fileUpName);

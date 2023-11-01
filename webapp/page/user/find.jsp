@@ -9,7 +9,6 @@
 </head>
 <body>
 	<form action="<%=path%>/user/find" method="post" id="form1">
-		用户名:<input type="text" id="userName" name="userName">
 		邮箱:<input type="text" id="userEmail" name="userEmail" onblur="checkEmail()"><span id="signEmail"></span><br/>
 		<input type="button" value="获取验证码" onclick="sendEmail()"><span id="signSend"></span><br/>
 		验证码：<input type="text" id="vcode" name="vcode"><br/>

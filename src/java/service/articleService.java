@@ -20,4 +20,7 @@ public interface articleService {
 	public boolean delete(int articleID);
 	public float findPrice(int articleID);
 	public List<article> getByArray(List<Integer> articleIDList);
+	public List<article> getByCheck();
+	//查询所有待审核的文章
+	public boolean check(String flag,int articleID);
 }

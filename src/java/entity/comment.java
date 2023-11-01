@@ -7,7 +7,7 @@ public class comment {
 	private int userID;
 	private int articleID;
 	private String commentStatus;
-	private Date publishTime;
+	private String publishTime;
 	private String commentContent;
 	private String userName;
 	
@@ -49,17 +49,19 @@ public class comment {
 	public void setCommentStatus(String commentStatus) {
 		this.commentStatus = commentStatus;
 	}
-	public Date getPublishTime() {
-		return publishTime;
-	}
-	public void setPublishTime(Date publishTime) {
-		this.publishTime = publishTime;
-	}
 	public String getCommentContent() {
 		return commentContent;
 	}
 	public void setCommentContent(String commentContent) {
 		this.commentContent = commentContent;
+	}
+
+	public String getPublishTime() {
+		return publishTime;
+	}
+
+	public void setPublishTime(String publishTime) {
+		this.publishTime = publishTime;
 	}
 	
 	

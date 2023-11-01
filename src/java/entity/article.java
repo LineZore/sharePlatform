@@ -7,11 +7,17 @@ public class article {
 	private int userID;
 	private String articleTitle;
 	private String articleContent;
-	private Date publishTime;
+	private java.sql.Date publishTime;
 	private String checkStatus;
 	private float articlePrice;
 	private String userName;
 	
+	public java.sql.Date getPublishTime() {
+		return publishTime;
+	}
+	public void setPublishTime(java.sql.Date publishTime) {
+		this.publishTime = publishTime;
+	}
 	public String getUserName() {
 		return userName;
 	}
@@ -41,12 +47,6 @@ public class article {
 	}
 	public void setArticleContent(String articleContent) {
 		this.articleContent = articleContent;
-	}
-	public Date getPublishTime() {
-		return publishTime;
-	}
-	public void setPublishTime(Date publishTime) {
-		this.publishTime = publishTime;
 	}
 	public String getCheckStatus() {
 		return checkStatus;

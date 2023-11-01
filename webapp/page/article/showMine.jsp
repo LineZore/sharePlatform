@@ -14,6 +14,13 @@
 				<td>${list.articleTitle}</td>
 				<td>作者：${list.userName}</td>
 				<td>价格：${list.articlePrice}</td>
+				<td>状态：
+					<c:choose>
+						<c:when test="${list.checkStatus=='0'}">待审核</c:when>
+						<c:when test="${list.checkStatus=='1'}">审核通过</c:when>
+						<c:when test="${list.checkStatus=='2'}">审核未通过</c:when>
+					</c:choose>
+				</td>
 				<td><input type=button onclick="window.location.href='/sharePlatform/article/show?articleID=${list.articleID}';" value="打开"></td>
 				<td><input type=button onclick="window.location.href='/sharePlatform/article/show?articleID=${list.articleID}&showType=modify';" value="修改"></td>
 				<td><input type=button onclick="deleteReg(${list.articleID })" value="删除"></td>

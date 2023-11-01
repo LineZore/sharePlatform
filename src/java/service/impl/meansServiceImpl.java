@@ -34,5 +34,10 @@ public class meansServiceImpl implements meansService{
 	public boolean delete(int meansID) {
 		return md.delete(meansID);
 	}
+
+	@Override
+	public String findName(int meansID) {
+		return md.findName(meansID);
+	}
 	
 }

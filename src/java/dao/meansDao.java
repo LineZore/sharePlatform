@@ -15,4 +15,6 @@ public interface meansDao {
 	//查询所有资料
 	public boolean delete(int meansID);
 	//删除资料
+	public String findName(int meansID);
+	//查询资料名称
 }

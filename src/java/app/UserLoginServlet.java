@@ -1,4 +1,4 @@
-package servlet;
+package app;
 
 import java.io.IOException;
 
@@ -8,14 +8,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.alibaba.fastjson.JSONObject;
+
+import entity.user;
 import service.userService;
 import service.impl.userServiceImpl;
 
-@WebServlet("/user/register")
-public class UserRegisterServlet extends HttpServlet{
+@WebServlet("/app/user/login")
+public class UserLoginServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doPost(req, resp);
@@ -25,26 +28,18 @@ public class UserRegisterServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String userName=req.getParameter("userName");
 		String userPassword=req.getParameter("userPassword");
-		String userEmail=req.getParameter("userEmail");
-		if(req.getSession().getAttribute("vregisterFlag").toString().equals("true")) {
-			if(req.getSession().getAttribute("userEmail").toString().equals(userEmail)) {
-				userService us=new userServiceImpl();
-				if(us.register(userName, userPassword,userEmail)) {
-					req.getSession().setAttribute("vregisterFlag",null);
-					req.getSession().setAttribute("vcode",null);
-					resp.getWriter().print(true);
-	
-				}else {
-					resp.getWriter().print(false);
-	
-				}
-			}else {
-				resp.getWriter().print(false);
-			}
-			
+		userService us=new userServiceImpl();
+		user u=us.login(userName, userPassword);
+		if(u.getUserName()!=null) {
+			req.getSession().setAttribute("user", u);
+			req.getSession().setAttribute("userName", u.getUserName());
+			req.getSession().setAttribute("userEmail", u.getUserEmail());
+			req.getSession().setAttribute("userIntegral", u.getUserIntegral());
+			req.getSession().setAttribute("userType", u.getUserType());
+			String jsonStr = JSONObject.toJSONString(u);
+			resp.getWriter().print(jsonStr);
 		}else {
 			resp.getWriter().print(false);
 		}
-		
 	}
 }

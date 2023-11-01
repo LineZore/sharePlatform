@@ -1,4 +1,4 @@
-package servlet;
+package app;
 
 import java.io.IOException;
 
@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import service.userService;
 import service.impl.userServiceImpl;
 
-@WebServlet("/user/register")
-public class UserRegisterServlet extends HttpServlet{
+@WebServlet("/app/user/checkName")
+public class UserCheckByNameServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -24,27 +24,13 @@ public class UserRegisterServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String userName=req.getParameter("userName");
-		String userPassword=req.getParameter("userPassword");
-		String userEmail=req.getParameter("userEmail");
-		if(req.getSession().getAttribute("vregisterFlag").toString().equals("true")) {
-			if(req.getSession().getAttribute("userEmail").toString().equals(userEmail)) {
-				userService us=new userServiceImpl();
-				if(us.register(userName, userPassword,userEmail)) {
-					req.getSession().setAttribute("vregisterFlag",null);
-					req.getSession().setAttribute("vcode",null);
-					resp.getWriter().print(true);
-	
-				}else {
-					resp.getWriter().print(false);
-	
-				}
-			}else {
-				resp.getWriter().print(false);
-			}
-			
+		userService us=new userServiceImpl();
+		if(us.checkByName(userName)==0) {
+			resp.getWriter().print(true);
 		}else {
 			resp.getWriter().print(false);
 		}
 		
 	}
+	
 }

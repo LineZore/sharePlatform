@@ -12,4 +12,6 @@ public interface meansService {
 	public boolean addMeansURL(int meansID,String meansURL);
 	public List<means> getAll(int articleID);
 	public boolean delete(int meansID);
+	public String findName(int meansID);
+	//查询资料名称
 }

@@ -1,4 +1,4 @@
-package servlet;
+package app;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,10 +12,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.catalina.Manager;
+
+import com.mysql.cj.Session;
 
 import service.exchangeService;
+import service.meansService;
 import service.impl.exchangeServiceImpl;
-@WebServlet("/means/download")
+import service.impl.meansServiceImpl;
+@WebServlet("/app/means/download")
 public class MeansDownloadServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
@@ -26,25 +33,30 @@ public class MeansDownloadServlet extends HttpServlet{
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String userName=req.getSession().getAttribute("userName").toString();
-		String articleIDStr=req.getParameter("articleID");
-		int articleID=Integer.parseInt(articleIDStr);
-		exchangeService es=new exchangeServiceImpl();
+//		String userName=req.getSession().getAttribute("userName").toString();
+//		String articleIDStr=req.getParameter("articleID");
+//		int articleID=Integer.parseInt(articleIDStr);
+//		exchangeService es=new exchangeServiceImpl();
 		
-		if(es.query(userName, articleID)) {
-			String meansID=req.getParameter("meansID");
-			String meansName=req.getParameter("meansName");
+//		if(es.query(userName, articleID)) {
+			String sessionID=req.getParameter("sessionID");
+			String meansIDStr=req.getParameter("meansID");
+			int meansID=Integer.parseInt(meansIDStr);
+			System.out.print(sessionID);
 			String path="D:\\eclipse\\workspace\\sharePlatform\\file\\";
-			File f = new File(path, meansID);
+
+			meansService ms=new meansServiceImpl();
+			String meansName=ms.findName(meansID);
+			File f = new File(path, meansIDStr);
 			if(f.exists()&&f.isFile()) {
 				resp.setHeader("content-disposition", "attachment;filename=" +URLEncoder.encode(meansName, "UTF-8"));
 				ServletOutputStream out = resp.getOutputStream();
 		        // 将文件复制到输出流中，响应给浏览器
 		        Files.copy(Paths.get(f.getAbsolutePath()), out);
 			}
-		}else {
-			resp.getWriter().print(false);
-		}
+//		}else {
+//			resp.getWriter().print(false);
+//		}
 		
         
 	}

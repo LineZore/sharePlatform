@@ -82,5 +82,23 @@ public class meansDaoImpl extends BaseDao implements meansDao{
 		else return false;
 	}
 
+	@Override
+	public String findName(int meansID) {
+		String sql="select * from means where meansID=?";
+		ResultSet rs=this.getData(sql, new Object [] {meansID});
+		String result=null;
+		
+		try {
+			while(rs.next()) {
+				result=rs.getString(3);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 	
 }

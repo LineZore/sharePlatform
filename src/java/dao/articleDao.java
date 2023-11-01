@@ -24,4 +24,9 @@ public interface articleDao {
 	public float findPrice(int articleID);
 	
 	public List<article> getByArray(List<Integer> articleIDList);
+	
+	public List<article> getByCheck();
+	//查询所有待审核的文章
+	public boolean check(String flag,int articleID);
+	//审核通过
 }

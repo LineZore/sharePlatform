@@ -61,6 +61,16 @@ public class articleServiceImpl implements articleService{
 		return ad.getByArray(articleIDList);
 	}
 
+	@Override
+	public List<article> getByCheck() {
+		return ad.getByCheck();
+	}
+
+	@Override
+	public boolean check(String flag, int articleID) {
+		return ad.check(flag, articleID);
+	}
+
 
 	
 }

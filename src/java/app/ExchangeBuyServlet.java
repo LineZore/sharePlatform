@@ -1,4 +1,4 @@
-package servlet;
+package app;
 
 import java.io.IOException;
 
@@ -15,7 +15,7 @@ import service.userService;
 import service.impl.articleServiceImpl;
 import service.impl.exchangeServiceImpl;
 import service.impl.userServiceImpl;
-@WebServlet("/exchange/buy")
+@WebServlet("/app/exchange/buy")
 public class ExchangeBuyServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
@@ -31,28 +31,32 @@ public class ExchangeBuyServlet extends HttpServlet{
 		String articleIDStr=req.getParameter("articleID");
 		int articleID=Integer.parseInt(articleIDStr);
 		
-		
 		articleService as=new articleServiceImpl();
 		article art=as.findContent(articleID);
+		exchangeService es=new exchangeServiceImpl();
 		
-		userService us=new userServiceImpl();
-		float userIntegral=us.findIntegral(userName);
-		float orderIntegral=us.findIntegral(art.getUserName());
-		
-		if(userIntegral>=art.getArticlePrice()) {
-			us.modifyIntegral(userName, userIntegral-art.getArticlePrice());
-			req.getSession().setAttribute("userIntegral", userIntegral-art.getArticlePrice());
-			us.modifyIntegral(art.getUserName(), orderIntegral+art.getArticlePrice());
-			
-			exchangeService es=new exchangeServiceImpl();
-			if(es.add(userName, articleID)) {
-				resp.getWriter().print(true);
-			}else {
-				resp.getWriter().print(false);
+		if(es.query(userName, articleID)) {
+			resp.getWriter().print("ÒÑ¹ºÂò");
+		}else {
+			userService us=new userServiceImpl();
+			float userIntegral=us.findIntegral(userName);
+			float orderIntegral=us.findIntegral(art.getUserName());
+			if(userIntegral>=art.getArticlePrice()) {
+				us.modifyIntegral(userName, userIntegral-art.getArticlePrice());
+				req.getSession().setAttribute("userIntegral", userIntegral-art.getArticlePrice());
+				us.modifyIntegral(art.getUserName(), orderIntegral+art.getArticlePrice());
+				
+				
+				if(es.add(userName, articleID)) {
+					resp.getWriter().print(true);
+				}else {
+					resp.getWriter().print(false);
+				}
+			}
+			else {
+				resp.getWriter().print("no_money");
 			}
 		}
-		else {
-			resp.getWriter().print("Óà¶î²»×ã");
-		}
+		
 	}
 }

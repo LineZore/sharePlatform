@@ -2,8 +2,10 @@ package dao.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import dao.articleDao;
@@ -15,8 +17,12 @@ public class articleDaoImpl extends BaseDao implements articleDao{
 	@Override
 	public boolean publish(String userName,String articleTitle, String articleContent, float articlePrice) {
 		if(this.find(articleTitle)==0) {
-			String sql="insert into article(userName,articleTitle,articleContent,articlePrice) values(?,?,?,?);";
-			int result=this.modifyData(sql, new Object [] {userName,articleTitle,articleContent,articlePrice});
+			Date d = new Date(); // 注意是util包下的Date
+			java.sql.Date date = new java.sql.Date(d.getTime()); // 转化成字段的数据类型
+			
+			String sql="insert into article(userName,articleTitle,articleContent,articlePrice,publishTime,checkStatus) values(?,?,?,?,?,0);";
+			
+			int result=this.modifyData(sql, new Object [] {userName,articleTitle,articleContent,articlePrice,date});
 			if(result==1)
 				return true;
 			else return false;
@@ -45,7 +51,7 @@ public class articleDaoImpl extends BaseDao implements articleDao{
 
 	@Override
 	public List<article> getByPage(int pageNo, int pageSize) {
-		String sql="select * from article where articleTitle is not null limit ?,?";
+		String sql="select * from article where articleTitle is not null and checkStatus=1 limit ?,?";
 		ResultSet rs=this.getData(sql, new Object [] {(pageNo-1)*pageSize,pageSize});
 		List<article> list=new ArrayList<article>();
 		
@@ -209,6 +215,43 @@ public class articleDaoImpl extends BaseDao implements articleDao{
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	@Override
+	public List<article> getByCheck() {
+		String sql="select * from article where checkStatus=0";
+		ResultSet rs=this.getData(sql, new Object [] {});
+		List<article> list=new ArrayList<article>();
+		
+		try {
+			while(rs.next()) {
+				article art=new article();
+				art.setArticleID(rs.getInt(1));
+				art.setUserID(rs.getInt(2));
+				art.setArticleTitle(rs.getString(3));
+				//art.setArticleContent(rs.getString(4));
+				art.setPublishTime(rs.getDate(5));
+				art.setCheckStatus(rs.getString(6));
+				art.setArticlePrice(rs.getFloat(7));
+				art.setUserName(rs.getString(8));
+				list.add(art);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+
+	@Override
+	public boolean check(String flag,int articleID) {
+		String sql="update article set checkStatus=? where articleID=?";
+		int result=this.modifyData(sql, new Object [] {flag,articleID});
+		if(result==1)
+			return true;
+		else return false;
 	}
 
 }

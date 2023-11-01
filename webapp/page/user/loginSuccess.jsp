@@ -25,6 +25,7 @@
 				<td>${list.articleTitle}</td>
 				<td>作者：${list.userName}</td>
 				<td>价格：${list.articlePrice}</td>
+				<td>发布时间：${list.publishTime}</td>
 				<td><input type=button onclick="window.location.href='/sharePlatform/article/show?articleID='+${list.articleID};" value="打开"></td>
 			</tr>
 		</c:forEach>
@@ -42,10 +43,15 @@
 	</table>
 	<br/>
 	
-	<input type="button" onclick="window.location.href='/sharePlatform/page/article/publish.jsp';" value="发布文章"><br/>
-	<input type="button" onclick="window.location.href='/sharePlatform/article/getUser';" value="我的文章">
-	<input type="button" onclick="window.location.href='/sharePlatform/exchange/getUser';" value="已购买的文章">
 	
+	<c:if test="${userType eq 'user' }">
+		<input type="button" onclick="window.location.href='/sharePlatform/page/article/publish.jsp';" value="发布文章"><br/>
+		<input type="button" onclick="window.location.href='/sharePlatform/article/getUser';" value="我的文章">
+		<input type="button" onclick="window.location.href='/sharePlatform/exchange/getUser';" value="已购买的文章">
+	</c:if>
+	<c:if test="${userType eq 'admin' }">
+		<input type="button" onclick="window.location.href='/sharePlatform/admin/getCheck';" value="待审核的文章"><br/>
+	</c:if>
 </body>
 <script type="text/javascript">
 	
