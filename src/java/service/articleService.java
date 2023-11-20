@@ -23,4 +23,6 @@ public interface articleService {
 	public List<article> getByCheck();
 	//查询所有待审核的文章
 	public boolean check(String flag,int articleID);
+	public boolean checkDelete(int articleID,String userName);
+	public String findName(int articleID);
 }

@@ -13,4 +13,5 @@ public interface commentService {
 	//查询文章的所有评论
 	public int getCount(int articleID);
 	public boolean delete(int commentID);
+	public boolean checkDelete(int commentID,String userName);
 }

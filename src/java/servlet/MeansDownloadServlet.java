@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import service.articleService;
 import service.exchangeService;
+import service.impl.articleServiceImpl;
 import service.impl.exchangeServiceImpl;
 @WebServlet("/means/download")
 public class MeansDownloadServlet extends HttpServlet{
@@ -30,8 +32,9 @@ public class MeansDownloadServlet extends HttpServlet{
 		String articleIDStr=req.getParameter("articleID");
 		int articleID=Integer.parseInt(articleIDStr);
 		exchangeService es=new exchangeServiceImpl();
+		articleService as=new articleServiceImpl();
 		
-		if(es.query(userName, articleID)) {
+		if(es.query(userName, articleID)||as.findName(articleID).equals(userName)||userName.equals("admin")) {
 			String meansID=req.getParameter("meansID");
 			String meansName=req.getParameter("meansName");
 			String path="D:\\eclipse\\workspace\\sharePlatform\\file\\";

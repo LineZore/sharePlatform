@@ -29,4 +29,7 @@ public interface articleDao {
 	//查询所有待审核的文章
 	public boolean check(String flag,int articleID);
 	//审核通过
+	public boolean checkDelete(int articleID,String userName);
+	//删除前检查
+	public String findName(int articleID);
 }

@@ -23,7 +23,6 @@ public class UserVerificateServlet extends HttpServlet{
 		String vcode=req.getParameter("vcode");
 		String svcode=req.getSession().getAttribute("vcode").toString();
 		String vtype=req.getParameter("vtype");
-		
 		if(vcode.equals(svcode)) {
 			req.getSession().setAttribute("v"+vtype+"Flag", "true");
 			resp.getWriter().print(true);

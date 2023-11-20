@@ -1,58 +1,177 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <title>我的文章</title>
+    <style>
+        h1 {
+            font-size: 28px;
+            text-align: center;
+        }
+        .container {
+		    max-width: 800px;
+		    margin: 20px auto;
+		    background-color: #fff;
+		    padding: 20px;
+		    padding-bottom: 50px;
+		    border-radius: 5px;
+		    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		    display: flex;
+		    flex-direction: column;
+		    align-items: center;
+		    justify-content: center; 
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        #exit-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 10px 20px;
+            width: auto;
+        }
+
+        table {
+            width: 95%;
+            margin: 20px auto;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+            white-space: nowrap;
+		    overflow: hidden;
+		    overflow-x: auto;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #333;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .button {
+            display: inline-block;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 10px 15px;
+            width: 30px;
+            text-align: center;
+        }
+
+        .button:hover {
+            background-color: #555;
+        }
+
+        .button.open {
+            background-color: #4CAF50;
+        }
+
+        .button.edit {
+            background-color: #2196F3;
+        }
+
+        .button.delete {
+            background-color: #f44336;
+        }
+        
+        .centered-button {
+    		text-align: center;
+		}
+    </style>
 </head>
 <body>
-	<table>
-		<c:forEach items="${list }" var="list">
-			<tr id="tr_${list.articleID}">
-				<td>${list.articleTitle}</td>
-				<td>作者：${list.userName}</td>
-				<td>价格：${list.articlePrice}</td>
-				<td>状态：
-					<c:choose>
-						<c:when test="${list.checkStatus=='0'}">待审核</c:when>
-						<c:when test="${list.checkStatus=='1'}">审核通过</c:when>
-						<c:when test="${list.checkStatus=='2'}">审核未通过</c:when>
-					</c:choose>
-				</td>
-				<td><input type=button onclick="window.location.href='/sharePlatform/article/show?articleID=${list.articleID}';" value="打开"></td>
-				<td><input type=button onclick="window.location.href='/sharePlatform/article/show?articleID=${list.articleID}&showType=modify';" value="修改"></td>
-				<td><input type=button onclick="deleteReg(${list.articleID })" value="删除"></td>
-
-			</tr>
-		</c:forEach>
-	</table	>
+    <button class="button" onclick="window.location.href='/sharePlatform/article/page';" id="exit-button">退出</button>
+    <c:choose>
+	    <c:when test="${empty list}">
+	        <div class="container">
+	            <h1>已购买的文章</h1>
+	            <p>尚未发表文章</p>
+	        </div>
+	    </c:when>
+	    <c:otherwise>
+		    <div class="container">
+		        <h1>我的文章</h1>
+			    <table>
+			        <tr>
+			            <th>文章标题</th>
+			            <th>作者</th>
+			            <th>价格</th>
+			            <th>审核状态</th>
+			            <th>操作</th>
+			        </tr>
+			        <c:forEach items="${list}" var="list">
+			            <tr id="tr_${list.articleID}">
+			                <td style="max-width: 400px;">${list.articleTitle}</td>
+			                <td>${list.userName}</td>
+			                <td>${list.articlePrice}</td>
+			                <td>
+			                <c:if test="${list.checkStatus eq '0'}">
+			                	待审核
+			                </c:if>	                
+			                <c:if test="${list.checkStatus eq '1'}">
+			                	审核通过
+			                </c:if>
+			                <c:if test="${list.checkStatus eq '2'}">
+			                	审核不通过
+			                </c:if>
+			                </td>
+		 					<td class="centered-button" style="width: 200px;">
+			                    <input class="button open" onclick="window.location.href='/sharePlatform/article/show?articleID=${list.articleID}';" value="查看">
+			                    <input class="button edit" onclick="window.location.href='/sharePlatform/article/show?articleID=${list.articleID}&showType=modify';" value="编辑">
+			                    <input class="button delete" onclick="deleteReg(${list.articleID})" value="删除">
+			                </td>
+			            </tr>
+			        </c:forEach>
+			    </table>
+			 </div>
+        </c:otherwise>
+    </c:choose>			 
 </body>
 <script type="text/javascript">
+    function deleteReg(id) {
+        var xhr = new XMLHttpRequest();
+        var url = "/sharePlatform/article/delete?articleID=" + id;
 
-function deleteReg(id){
-	var xhr=new XMLHttpRequest();
-	var url="/sharePlatform/article/delete?articleID="+id;
-	
-	xhr.open("post",url,true);		//开启请求
-	xhr.send();
-	xhr.onreadystatechange=function(){
-		if(xhr.readyState==4&&xhr.status==200){
-			//readyState 请求状态
-			//status 响应状态
-			var resText=xhr.responseText;
-			if(resText=="true"){
-				alert("删除成功");
-			 	var div = document.getElementById("tr_"+id);
-			 	div.remove();
-			}else{
-				alert("删除失败");
-			}
-		}
-	}
-	
-}
-	
+        xhr.open("post", url, true);
+        xhr.send();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var resText = xhr.responseText;
+                if (resText == "true") {
+                    alert("删除成功");
+                    var div = document.getElementById("tr_" + id);
+                    div.remove();
+                } else {
+                    alert("删除失败");
+                }
+            }
+        }
+    }
 </script>
 </html>

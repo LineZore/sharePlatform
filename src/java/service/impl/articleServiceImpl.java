@@ -71,6 +71,16 @@ public class articleServiceImpl implements articleService{
 		return ad.check(flag, articleID);
 	}
 
+	@Override
+	public boolean checkDelete(int articleID, String userName) {
+		return ad.checkDelete(articleID, userName);
+	}
+
+	@Override
+	public String findName(int articleID) {
+		return ad.findName(articleID);
+	}
+
 
 	
 }

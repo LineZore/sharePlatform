@@ -42,7 +42,6 @@ public class MeansDownloadServlet extends HttpServlet{
 			String sessionID=req.getParameter("sessionID");
 			String meansIDStr=req.getParameter("meansID");
 			int meansID=Integer.parseInt(meansIDStr);
-			System.out.print(sessionID);
 			String path="D:\\eclipse\\workspace\\sharePlatform\\file\\";
 
 			meansService ms=new meansServiceImpl();

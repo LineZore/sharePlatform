@@ -14,14 +14,31 @@ import javax.mail.internet.MimeMessage;
 
 public class EmailUtil {
 	public boolean sendVerificationEmail(String userEmail,String context) {
-		String from ="2649883212@qq.com";
-		String token="vmdjfvgdpqgudigi";
+//		String from ="2649883212@qq.com";
+//		String token="vmdjfvgdpqgudigi";
+		String from ="15605931768@163.com";
+		String token="FIPRZZFSXUSEWUST";
 		
 		Properties properties = new Properties();
-        properties.put("mail.transport.protocol", "smtp");// 连接协议
-        properties.put("mail.smtp.host", "smtp.qq.com");// 主机名
-        properties.put("mail.smtp.port", "587");
+		properties.put("mail.transport.protocol", "smtp");// 连接协议
+		properties.put("mail.smtp.host", "smtp.163.com");
+		properties.put("mail.smtp.port", "465");
+		properties.put("mail.smtp.socketFactory.class", "javax.NET.ssl.SSLSocketFactory");
+        properties.put("mail.smtp.socketFactory.port", "465");
         properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.ssl.enable","true");
+        properties.put("mail.smtp.ssl.protocols", "TLSv1.2");
+//		
+////        properties.put("mail.smtp.host", "smtp.qq.com");// 主机名
+////        properties.put("mail.smtp.port", "587");
+//		properties.setProperty("mail.smtp.host", "smtp.163.com");
+//		properties.put("mail.smtp.host", "smtp.163.com");// 主机名
+//		properties.put("mail.smtp.port", "587");
+//		
+////		properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+////		properties.put("mail.smtp.socketFactory.port", "587");
+//		
+//        properties.put("mail.smtp.auth", "true");
         boolean result=false;
 //        properties.put("mail.smtp.ssl.protocols", "TLSv1.2");
         

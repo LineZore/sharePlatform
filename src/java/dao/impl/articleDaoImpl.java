@@ -78,7 +78,7 @@ public class articleDaoImpl extends BaseDao implements articleDao{
 
 	@Override
 	public int getCount() {
-		String sql="select count(1) from article";
+		String sql="select count(1) from article where checkStatus=1";
 		ResultSet rs=this.getData(sql, new Object [] {});
 		int count=0;
 		try {
@@ -147,7 +147,7 @@ public class articleDaoImpl extends BaseDao implements articleDao{
 	@Override
 	public boolean modify(int articleID, String articleTitle, String articleContent, float articlePrice) {
 		
-		String sql="update article set articleTitle=?, articleContent=?, articlePrice=? where articleID=?";
+		String sql="update article set articleTitle=?, articleContent=?, articlePrice=?,checkStatus=0 where articleID=?";
 		int result=this.modifyData(sql, new Object [] {articleTitle,articleContent,articlePrice,articleID});
 		if(result==1)
 			return true;
@@ -252,6 +252,42 @@ public class articleDaoImpl extends BaseDao implements articleDao{
 		if(result==1)
 			return true;
 		else return false;
+	}
+
+	@Override
+	public boolean checkDelete(int articleID, String userName) {
+		String sql="select * from article where articleID=? and userName=?";
+		ResultSet rs=this.getData(sql, new Object [] {articleID,userName});
+		boolean result=false;
+		try {
+			while(rs.next()) {
+				result=true;
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public String findName(int articleID) {
+		String sql="select * from article where articleID=?";
+		ResultSet rs=this.getData(sql, new Object [] {articleID});
+		String userName=null;
+		
+		try {
+			while(rs.next()) {
+
+				userName=rs.getString(8);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return userName;
 	}
 
 }

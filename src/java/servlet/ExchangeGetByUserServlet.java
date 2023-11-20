@@ -28,15 +28,16 @@ public class ExchangeGetByUserServlet extends HttpServlet{
 		String userName=req.getSession().getAttribute("userName").toString();
 		exchangeService es=new exchangeServiceImpl();
 		List<Integer> intList= es.find(userName);
+		List<article> list=null;
 		if(intList.isEmpty()) {
 			
 		}else {
 			articleService as=new articleServiceImpl();
-			List<article> list=as.getByArray(intList);
-			req.setAttribute("list", list);
-			req.getRequestDispatcher("/page/exchange/showMine.jsp").forward(req, resp);
-
+			list=as.getByArray(intList);
+			
 		}
-		
+		req.setAttribute("list", list);
+		req.getRequestDispatcher("/page/exchange/showMine.jsp").forward(req, resp);
+
 	}
 }

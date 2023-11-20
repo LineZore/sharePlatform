@@ -69,6 +69,7 @@ public class UserModifyServlet extends HttpServlet{
 						resp.getWriter().print(false);
 					}
 				}else {
+					
 					resp.getWriter().print("ÑéÖ¤Âë´íÎó");
 				}
 			}else {

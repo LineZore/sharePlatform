@@ -1,4 +1,4 @@
-package servlet;
+package app;
 
 import java.io.IOException;
 
@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import service.articleService;
-import service.impl.articleServiceImpl;
-@WebServlet("/article/delete")
-public class ArticleDeleteServlet extends HttpServlet{
+import service.commentService;
+import service.impl.commentServiceImpl;
+@WebServlet("/app/comment/delete")
+public class CommentDeleteServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -21,15 +21,15 @@ public class ArticleDeleteServlet extends HttpServlet{
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String articleIDStr=req.getParameter("articleID");
-		int articleID=Integer.parseInt(articleIDStr);
-		articleService as=new articleServiceImpl();
+		String commentIdStr=req.getParameter("commentID");
+		int commentID=Integer.parseInt(commentIdStr);
+		commentService cs=new commentServiceImpl();
 		String userType=req.getSession().getAttribute("userType").toString();
 		String userName=req.getSession().getAttribute("userName").toString();
-		if(userType.equals("admin")||as.checkDelete(articleID, userName)) {
+		if(userType.equals("admin")||cs.checkDelete(commentID, userName)) {
 			
 			
-			if(as.delete(articleID)) {
+			if(cs.delete(commentID)) {
 				resp.getWriter().print(true);
 			}else {
 				resp.getWriter().print(false);

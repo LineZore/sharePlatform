@@ -78,6 +78,24 @@ public class commentDaoImpl extends BaseDao implements commentDao{
 		else return true;
 	}
 
+
+	@Override
+	public boolean checkDelete(int commentID, String userName) {
+		String sql="select * from comment where commentID=? and userName=?";
+		ResultSet rs=this.getData(sql, new Object [] {commentID,userName});
+		boolean result=false;
+		try {
+			while(rs.next()) {
+				result=true;
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 	
 
 }

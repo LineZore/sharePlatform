@@ -1,4 +1,4 @@
-package servlet;
+package app;
 
 import java.io.IOException;
 
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import service.articleService;
 import service.impl.articleServiceImpl;
-@WebServlet("/article/delete")
+@WebServlet("/app/article/delete")
 public class ArticleDeleteServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;

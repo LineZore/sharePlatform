@@ -31,7 +31,7 @@ public class ArticleModifyServlet extends HttpServlet{
 		String articleContent=req.getParameter("articleContent");
 		String articlePriceStr=req.getParameter("articlePrice");
 		float articlePrice=0;
-		if(articlePriceStr==null||articlePriceStr=="") {
+		if(articlePriceStr!=null&&articlePriceStr!="") {
 			articlePrice=Float.parseFloat(articlePriceStr);
 		}
 		articleService as=new articleServiceImpl();

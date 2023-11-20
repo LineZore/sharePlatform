@@ -24,10 +24,20 @@ public class CommentDeleteServlet extends HttpServlet{
 		String commentIdStr=req.getParameter("commentID");
 		int commentID=Integer.parseInt(commentIdStr);
 		commentService cs=new commentServiceImpl();
-		if(cs.delete(commentID)) {
-			req.getRequestDispatcher("/article/show").forward(req, resp);
-		}else{
+		String userType=req.getSession().getAttribute("userType").toString();
+		String userName=req.getSession().getAttribute("userName").toString();
+		if(userType.equals("admin")||cs.checkDelete(commentID, userName)) {
 			
+			if(cs.delete(commentID)) {
+				req.getRequestDispatcher("/article/show").forward(req, resp);
+			}else {
+				resp.getWriter().print(false);
+			}
 		}
+		else {
+			resp.getWriter().print("ÎÞÈ¨ÏÞ");
+		}
+		
+		
 	}
 }

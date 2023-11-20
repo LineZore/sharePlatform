@@ -28,6 +28,7 @@ public class UserRegisterServlet extends HttpServlet{
 		String userEmail=req.getParameter("userEmail");
 		if(req.getSession().getAttribute("vregisterFlag").toString().equals("true")) {
 			if(req.getSession().getAttribute("userEmail").toString().equals(userEmail)) {
+				
 				userService us=new userServiceImpl();
 				if(us.register(userName, userPassword,userEmail)) {
 					req.getSession().setAttribute("vregisterFlag",null);

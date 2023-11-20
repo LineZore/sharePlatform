@@ -17,4 +17,6 @@ public interface commentDao   {
 	
 	public boolean delete(int commentID);
 	//É¾³ıÆÀÂÛ
+	public boolean checkDelete(int commentID,String userName);
+	//É¾³ıÇ°¼ì²é
 }

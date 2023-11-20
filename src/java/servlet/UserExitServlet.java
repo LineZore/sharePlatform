@@ -24,7 +24,7 @@ public class UserExitServlet extends HttpServlet{
 		req.getSession().setAttribute("userEmail", null);
 		req.getSession().setAttribute("userIntegral", null);
 		req.getSession().setAttribute("userType", null);
-		resp.sendRedirect("/sharePlatform/page/user/userIndex.jsp");
+		resp.sendRedirect("/sharePlatform/page/user/login.jsp");
 	}
 	
 }

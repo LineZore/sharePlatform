@@ -30,6 +30,11 @@ public class commentServiceImpl implements commentService{
 		return cd.delete(commentID);
 	}
 
+	@Override
+	public boolean checkDelete(int commentID, String userName) {
+		return cd.checkDelete(commentID, userName);
+	}
+
 	
 
 }

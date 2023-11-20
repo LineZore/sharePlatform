@@ -59,6 +59,9 @@ public class ArticlePublishServlet extends HttpServlet{
 			        	}else if(fileItem.getFieldName().equals("articlePrice")) {
 			        		ap=value;
 			        		articlePrice=Float.parseFloat(ap);
+			        		if(articlePrice<0) {
+			        			resp.getWriter().print(false);
+			        		}
 			        	}
 			        	
 			        } else {
@@ -66,6 +69,9 @@ public class ArticlePublishServlet extends HttpServlet{
 			        		articleService as=new articleServiceImpl();
 				    		if(as.publish(userName,articleTitle, articleContent, articlePrice)) {
 				    			articleID=as.find(articleTitle);
+				    		}
+				    		else {
+				    			resp.getWriter().print(false);
 				    		}
 				    		flag=0;
 			        	}
@@ -84,7 +90,7 @@ public class ArticlePublishServlet extends HttpServlet{
 			        	}
 			        }
 			    }
-		        req.getRequestDispatcher("/article/page").forward(req, resp);		
+			    resp.sendRedirect("/sharePlatform/article/page");
 
 	        } catch (Exception e) {
 	            e.printStackTrace();
